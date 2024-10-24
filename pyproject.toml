@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "trees-brandenburg"
+version = "0.1.0"
+description = ""
+authors = [
+    "Florian-Katerndahl <florian@katerndahl.com>",
+    "Fabian Fassnacht <fabian.fassnacht@fu-berlin.de>"
+]
+license = "CC-BY-4.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^2.1.2"
+pandas = "^2.2.3"
+tqdm = "^4.66.5"
+matplotlib = "^3.9.2"
+scikit-learn = "^1.5.2"
+rasterio = "^1.4.1"
+torch = "^2.4.1"
+torchvision = "^0.19.1"
+jupyterlab = "^4.2.5"
+pylint = "^3.3.1"
+pycodestyle = "^2.12.1"
+nbconvert = "^7.16.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

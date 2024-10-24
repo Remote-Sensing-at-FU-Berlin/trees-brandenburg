@@ -1,0 +1,8 @@
+data/
+models/
+tests/
+__pycache__/
+
+trees_brandenburg/classification_tif_annotated*.py
+poetry.lock
+notebooks/*.pt
