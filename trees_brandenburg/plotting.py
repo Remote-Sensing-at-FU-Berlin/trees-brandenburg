@@ -37,3 +37,17 @@ def plot_validation(data: torch.Tensor, model: torch.nn.Module, reverse_label_en
             ax.set_title(str(reverse_label_encoding[label.item()])+":" +str(k))
 
     return fig, ax
+
+def plot_ft_validation(data: torch.Tensor, model: torch.nn.Module, reverse_label_encoding: Dict[int, str], nrows: int = 3, ncols: int = 5, **args) -> Tuple[plt.figure, plt.axis]:
+    fig, axis = plt.subplots(nrows, ncols, **args)
+    for images, labels in data:
+        with torch.inference_mode():
+            for ax, image, label in zip(axis.flat, images, labels):
+                ax.imshow(make_image_plottable(image))
+            # image_tensor = image.unsqueeze_(0)
+            k = torch.max(model(images), 1).indices == labels
+            ax.set_title(str(reverse_label_encoding[label.item()])+":" +str(k))
+        
+        break
+
+    return fig, ax

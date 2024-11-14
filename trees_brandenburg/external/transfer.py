@@ -4,6 +4,7 @@ and is licensed under the 3-Clause BSD license (see `license` directory).
 
 The functions may be modified.
 """
+from pathlib import Path
 import time
 from tempfile import TemporaryDirectory
 from typing import Dict
