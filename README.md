@@ -5,7 +5,7 @@
 The noteboook(s) and examples are licensed under the [CC-BY-4.0](./licenses/cc-by-4) license. The code is licensed under the [3 clause BSD](./licenses/3-clause-bsd) license.
 
 ```raw
-E:.
+trees-brandenburg
 ├───data
 │   ├───interim
 │   ├───processed
