@@ -1,3 +1,4 @@
+import re
 from shutil import copytree
 from pathlib import Path
 from typing import List
@@ -5,6 +6,7 @@ from warnings import warn
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
+BRANDENBURG_DOP_PATTERN: re.Pattern = re.compile(r"dop_\d{5}-\d{4}")
 
 def generate_subset(indir: Path, outdir: Path, classes: List[str]) -> None:
     """Subset training data according to class labels
@@ -62,3 +64,25 @@ def generate_data_overview(src: Path, pattern: str = "*.tif", encode_labels: boo
         out["encoded_labels"] = LabelEncoder().fit_transform(out["labels"])
 
     return out
+
+
+def filter_image_df(images: pd.DataFrame, allowed_tiles: pd.Series) -> pd.DataFrame:
+    """Filter input images based on their file names.
+
+    .. note:: This function expects that the `images` data frame contains a column
+      called images with the file paths/file names.
+
+    .. warning:: This function depends on the global object `BRANDENBURG_DOP_PATTERN`
+      and is thus non-portable!
+
+    :param images: Dataframe containing at least one column with file paths/file names
+    :type images: pd.DataFrame
+    :param allowed_tiles: Series of substrings that are allowed
+    :type allowed_tiles: pd.Series
+    :return: Filtered data frame
+    :rtype: pd.DataFrame
+    """
+    images["tile"] = [BRANDENBURG_DOP_PATTERN.findall(str(x))[0] for x in images.images]
+    images = images[images.tile.isin(allowed_tiles)].drop("tile", axis=1)
+    images = images.reset_index(drop=True)
+    return images
