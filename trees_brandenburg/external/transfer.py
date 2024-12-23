@@ -56,12 +56,18 @@ def train_model(model, dataloaders: Dict, dataset_sizes: Dict, criterion, optimi
                         if phase == 'train':
                             loss.backward()
                             optimizer.step()
+                            # TODO is this correct?
+                            # Note that in contrast to original tutorial, lr_scheduler is called after every batch as is 
+                            #  suggested in PyTorch's docs. This is NOT applicable for all lr-schedulers
+                            #  (see https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate)
+                            if scheduler is not None:
+                                scheduler.step()
 
                     # statistics
                     running_loss += loss.item() * inputs.size(0)
                     running_corrects += torch.sum(preds == labels.data)
-                if scheduler is not None and phase == 'train':
-                    scheduler.step()
+                # if scheduler is not None and phase == 'train':
+                #     scheduler.step()
 
                 epoch_loss = running_loss / dataset_sizes[phase]
                 epoch_acc = running_corrects.double() / dataset_sizes[phase]

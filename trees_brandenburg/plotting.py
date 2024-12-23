@@ -11,7 +11,7 @@ def make_image_plottable(img: torch.Tensor) -> np.ndarray:
     return npimg
 
 
-def plot_images(data: torch.Tensor, reverse_label_encoding: Dict[int, str], nrows: int = 3, ncols: int = 5, **args) -> Tuple[plt.figure, plt.axis]:
+def plot_images(data: torch.utils.data.DataLoader, reverse_label_encoding: Dict[int, str], nrows: int = 3, ncols: int = 5, **args) -> Tuple[plt.figure, plt.axis]:
     dataiter = iter(data)
     images, labels = next(dataiter)
     fig, axis = plt.subplots(nrows, ncols, **args)
